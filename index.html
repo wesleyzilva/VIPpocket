@@ -12,9 +12,8 @@
     (function () {
       const redirect = sessionStorage.redirect;
       if (redirect) {
-        delete sessionStorage.redirect;
-        // Restaura a URL original (ex: /VIPocket/login)
-        history.replaceState(null, null, redirect, null);
+        sessionStorage.removeItem('redirect');
+        history.replaceState(null, '', redirect);
       }
     })();
   </script>
