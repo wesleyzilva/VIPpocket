@@ -3,12 +3,23 @@
 <head>
   <meta charset="utf-8">
   <title>VIPocket</title>
-  <base href="/VIPpocket/">
+  <base href="https://wesleyzilva.github.io/VIPpocket/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Script para restaurar a rota após redirecionamento do 404.html no GitHub Pages -->
+  <script>
+    (function () {
+      const redirect = sessionStorage.redirect;
+      if (redirect) {
+        sessionStorage.removeItem('redirect');
+        history.replaceState(null, '', redirect);
+      }
+    })();
+  </script>
 
 <link rel="stylesheet" href="styles-5INURTSO.css"></head>
 <body>
   <app-root></app-root>
-<script src="polyfills-5CFQRCPP.js" type="module"></script><script src="main-CLX5O7XF.js" type="module"></script></body>
+<script src="polyfills-5CFQRCPP.js" type="module"></script><script src="main-HPNZ7QXS.js" type="module"></script></body>
 </html>
