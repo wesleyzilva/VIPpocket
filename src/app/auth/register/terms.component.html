@@ -1,0 +1,39 @@
+<div class="auth-container">
+  <form class="auth-form" [formGroup]="termsForm" (ngSubmit)="onSubmit()" novalidate>
+    <h2>Termos de Uso e Privacidade</h2>
+    <p class="instructions">Etapa 2 de 3: Leia e aceite os termos para continuar.</p>
+
+    <div class="terms-box">
+      <h3>1. Aceitação dos Termos</h3>
+      <p>Ao se cadastrar e utilizar os serviços do VIPocket, você concorda em cumprir com os presentes Termos de Uso e com nossa Política de Privacidade. Se você não concorda com qualquer parte dos termos, não poderá utilizar nossos serviços.</p>
+
+      <h3>2. Descrição do Serviço</h3>
+      <p>O VIPocket oferece um cartão de fidelidade digital que permite aos usuários acumular benefícios e descontos em estabelecimentos parceiros. As regras específicas de cada programa de fidelidade são definidas pelos estabelecimentos.</p>
+
+      <h3>3. Cadastro e Conta do Usuário</h3>
+      <p>Para utilizar o serviço, você deve fornecer informações de cadastro precisas e completas, incluindo nome, e-mail, CPF e data de nascimento. Você é responsável por manter a confidencialidade de sua senha e por todas as atividades que ocorram em sua conta.</p>
+
+      <h3>4. Uso do QR Code</h3>
+      <p>O QR Code gerado é pessoal e intransferível, servindo como sua identificação para pontuar e resgatar benefícios. A segurança do seu QR Code é de sua responsabilidade.</p>
+
+      <h3>5. Coleta e Uso de Dados</h3>
+      <p>Coletamos dados pessoais para operar e melhorar nossos serviços. Ao aceitar estes termos, você concorda com a coleta e o uso de suas informações conforme descrito em nossa Política de Privacidade. Seus dados de consumo podem ser analisados de forma anônima para fins estatísticos.</p>
+
+      <h3>6. Modificações nos Termos</h3>
+      <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. Notificaremos sobre alterações significativas através do e-mail cadastrado ou por meio de avisos na aplicação.</p>
+    </div>
+
+    <mat-checkbox formControlName="accept" color="primary">
+      Li e concordo com os Termos de Uso e a Política de Privacidade.
+    </mat-checkbox>
+    <mat-error *ngIf="termsForm.get('accept')?.touched && termsForm.get('accept')?.hasError('required')">
+      Você precisa aceitar os termos para continuar.
+    </mat-error>
+
+    <button type="submit">Avançar para Senha</button>
+
+    <div class="links">
+      <a routerLink="/register">Voltar para a etapa anterior</a>
+    </div>
+  </form>
+</div>

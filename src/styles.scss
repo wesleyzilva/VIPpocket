@@ -1,0 +1,183 @@
+/* You can add global styles to this file, and also import other style files */
+/* Global VIP Theme Variables */
+:root {
+  --background-color: #1a1a1a;
+  --surface-color: #2c2c2c;
+  --primary-color: #d4af37; /* VIP Gold */
+  --primary-color-hover: #e7c369;
+  --text-color: #f0f0f0;
+  --text-color-secondary: #b0b0b0;
+  --border-color: #444;
+  --border-color-focus: #d4af37;
+  --error-color: #ff5252;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: var(--text-color);
+}
+
+/* Shared Auth Form Styles */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.auth-form {
+  padding: 2rem;
+  background: var(--surface-color);
+  border-radius: 16px;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--text-color-secondary);
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 0.85rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: #1a1a1a;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:disabled {
+      background-color: #555;
+      color: #888;
+      cursor: not-allowed;
+      animation: none; /* Desativa a pulsação quando desabilitado */
+    }
+
+    &:not(:disabled):hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
+
+  .links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+
+    legend {
+      padding: 0 0.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+  }
+}
+
+/* Angular Material Autocomplete VIP Theme */
+.mat-mdc-autocomplete-panel {
+  background-color: var(--surface-color) !important;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+/* Garante que o painel do autocomplete tenha a mesma largura do input */
+.mat-mdc-autocomplete-panel.mat-mdc-autocomplete-panel-above, .mat-mdc-autocomplete-panel.mat-mdc-autocomplete-panel-below {
+  width: var(--mat-form-field-width);
+}
+
+.mat-mdc-option {
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-option.mdc-list-item--selected, .mat-mdc-option:hover {
+  background-color: rgba(212, 175, 55, 0.2) !important;
+  color: var(--primary-color) !important;
+}
+
+/* Angular Material Form Field VIP Theme */
+.auth-form .mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field .mdc-text-field--filled {
+  background-color: #3a3a3a !important;
+}
+
+.mat-mdc-form-field .mdc-line-ripple::before,
+.mat-mdc-form-field .mdc-line-ripple::after {
+  border-bottom-color: var(--border-color-focus) !important;
+}
+
+.mat-mdc-form-field .mdc-floating-label,
+.mat-mdc-form-field .mat-mdc-select-arrow,
+.mat-mdc-form-field .mat-mdc-form-field-hint,
+.mat-mdc-form-field .mat-mdc-form-field-error {
+  color: var(--text-color-secondary) !important;
+}
+
+.mat-mdc-form-field .mdc-floating-label--float-above {
+  color: var(--primary-color) !important;
+}
+
+/* Success State Styles */
+.auth-form.success-state {
+  text-align: center;
+  gap: 1.5rem;
+
+  .user-summary {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: left;
+    border-left: 4px solid var(--primary-color);
+
+    p {
+      margin: 0.5rem 0;
+      strong {
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

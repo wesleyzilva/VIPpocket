@@ -1,0 +1,250 @@
+.loyalty-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a1a; // Fundo escuro para a página
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  padding: 2rem 1rem;
+}
+
+.loyalty-card {
+  padding: 1.5rem 2rem;
+  background: #2c2c2c; // Cor de fundo do cartão
+  border-radius: 16px;
+  border: 1px solid #d4af37; // Borda dourada sutil
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+  color: #f0f0f0; // Cor de texto padrão clara
+
+  .header {
+    .username {
+      color: #b0b0b0; // Nome de usuário mais sutil
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    h1 {
+      color: #d4af37; // Título em dourado
+      margin: 0;
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+  }
+
+  .stamps-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+
+    .stamp-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+    }
+
+    .stamp {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px dashed #555; // Borda do selo não marcado
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #777;
+      font-weight: bold;
+      font-size: 1rem; // Reduzido o tamanho do número
+      transition: all 0.3s ease;
+
+      &.stamped {
+        border-style: solid;
+        border-color: #d4af37; // Borda do selo marcado em dourado
+        background-color: #d4af37; // Fundo do selo marcado em dourado
+        color: #2c2c2c; // Cor do texto da data
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        padding: 6px;
+
+        .date-info {
+          display: flex;
+          flex-direction: column;
+          font-weight: bold;
+          line-height: 1;
+
+          .stamp-date-day {
+            font-size: 1.2rem;
+          }
+
+          .stamp-date-month {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            margin-top: 2px;
+          }
+        }
+
+        .spent-amount {
+          font-size: 0.65rem;
+          margin-top: 4px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .discount-indicator {
+      display: flex;
+      align-items: center;
+      font-size: 0.7rem;
+      color: #a0a0a0;
+
+      .green-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #28a745;
+        border-radius: 50%;
+        margin-right: 5px;
+        box-shadow: 0 0 6px rgba(40, 167, 69, 0.7);
+      }
+    }
+
+  }
+
+  .card-rule {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    p {
+      margin: 0;
+      strong, b {
+        color: #d4af37;
+      }
+    }
+  }
+
+  .qr-code-section {
+    background-color: white; // Fundo branco para o QR Code para garantir a leitura
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 0 auto;
+
+    img {
+      border-radius: 8px;
+      display: block;
+    }
+    p {
+      margin: 0.75rem 0 0;
+      font-size: 0.9rem;
+      color: #333; // Texto escuro para contrastar com o fundo branco
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    border-top: 1px solid #444;
+    padding-top: 1.5rem;
+
+    .footer-item {
+      flex: 1;
+
+      p {
+        margin: 0 0 0.25rem 0;
+        color: #b0b0b0;
+        font-size: 0.9rem;
+      }
+
+      .value {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .spent {
+        color: #f0f0f0;
+      }
+
+      .discount {
+        color: #ffd700; // Cor dourada para o desconto
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+      }
+
+      .discount-total {
+        color: #9acd32; // Verde-amarelado para o total
+        text-shadow: 0 0 8px rgba(154, 205, 50, 0.6);
+      }
+    }
+  }
+}
+
+/* Estilos para a seção de ciclo completo */
+.cycle-complete-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid #444;
+
+  .completion-message {
+    p {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #9acd32; // Verde-amarelado para destaque
+    }
+    span {
+      font-size: 1rem;
+      color: #b0b0b0;
+    }
+  }
+
+  .next-phase-message {
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    padding: 0 1rem;
+    p {
+      margin: 0;
+      strong {
+        color: #d4af37;
+      }
+    }
+  }
+
+  .new-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: 50px; // Bordas bem arredondadas
+    background-color: #28a745; // Verde sucesso
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    animation: pulse-border 2s infinite;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+}
+
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}

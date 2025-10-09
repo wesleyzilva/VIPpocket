@@ -1,0 +1,87 @@
+<div class="auth-container">
+  <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+    <h2>Crie sua Conta</h2>
+    <p class="instructions">Etapa 1 de 3: Suas informações pessoais.</p>
+
+    <mat-form-field>
+      <mat-label>Nome Completo</mat-label>
+      <input matInput id="fullName" type="text" formControlName="fullName" placeholder="Seu nome completo">
+      <mat-error *ngIf="registerForm.get('fullName')?.hasError('required')">Nome é obrigatório.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput id="email" type="email" formControlName="email" placeholder="seu@email.com">
+      <mat-error *ngIf="registerForm.get('email')?.hasError('required')">Email é obrigatório.</mat-error>
+      <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Formato de email inválido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>CPF</mat-label>
+      <input matInput id="cpf" type="text" formControlName="cpf" placeholder="000.000.000-00" maxlength="14" (input)="formatCpf($event)">
+      <mat-error *ngIf="registerForm.get('cpf')?.hasError('pattern')">Formato de CPF inválido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Data de Nascimento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="dd/mm/aaaa">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="registerForm.get('birthDate')?.hasError('required')">Data de nascimento é obrigatória.</mat-error>
+      <mat-error *ngIf="registerForm.get('birthDate')?.hasError('minAge')">Você deve ser maior de 18 anos.</mat-error>
+    </mat-form-field>
+
+    <fieldset formGroupName="address">
+      <legend>Seu Endereço</legend>
+      <mat-form-field>
+        <mat-label>CEP</mat-label>
+        <input matInput id="cep" type="text" formControlName="cep" placeholder="00000-000" maxlength="9" (input)="formatCep($event)">
+        <mat-error *ngIf="registerForm.get('address.cep')?.hasError('pattern')">Formato de CEP inválido.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Rua</mat-label>
+        <input matInput id="street" type="text" formControlName="street" placeholder="Nome da sua rua">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Número</mat-label>
+        <input matInput id="number" type="text" formControlName="number" placeholder="123">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Bairro</mat-label>
+        <input matInput id="neighborhood" type="text" formControlName="neighborhood" placeholder="Seu bairro">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <input type="text"
+               placeholder="Digite seu estado"
+               matInput
+               formControlName="state"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+            {{state.name}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="registerForm.get('address.state')?.hasError('required')">Estado é obrigatório.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cidade</mat-label>
+        <input type="text"
+               placeholder="Digite sua cidade"
+               matInput
+               formControlName="city"
+               [matAutocomplete]="autoCity">
+        <mat-autocomplete #autoCity="matAutocomplete">
+          <mat-option *ngFor="let city of filteredCities | async" [value]="city">{{city}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </fieldset>
+
+    <button type="submit" [disabled]="registerForm.invalid">Avançar para Termos de Uso</button>
+
+    <div class="links">
+      <a routerLink="/login">Já tem uma conta? Faça o login</a>
+      <a routerLink="/forgot-password">Esqueceu a senha?</a>
+    </div>
+  </form>
+</div>

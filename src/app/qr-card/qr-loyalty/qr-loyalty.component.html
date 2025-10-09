@@ -1,0 +1,71 @@
+<div class="loyalty-card-container">
+  <div class="loyalty-card">
+    <div class="header">
+      <p class="username">VIP: {{ user.name }}</p>
+      <h1>Cartão Fidelidade</h1>
+    </div>
+
+    <!-- Estado Normal do Cartão -->
+    <ng-container *ngIf="!isCycleComplete">
+      <div class="stamps-container">
+        <div *ngFor="let stamp of user.stamps" class="stamp-wrapper">
+          <div class="stamp" [class.stamped]="stamp.stamped">
+            <span *ngIf="!stamp.stamped" class="day-number">{{ stamp.day }}</span>
+            <div *ngIf="stamp.stamped" class="stamp-date">
+              <div class="date-info">
+                <span class="stamp-date-day">{{ stamp.date | date:'dd' }}</span>
+                <span class="stamp-date-month">{{ stamp.date | date:'MMM' }}</span>
+              </div>
+              <span class="spent-amount">{{ stamp.spentAmount | currency:'BRL' }}</span>
+            </div>
+          </div>
+          <div *ngIf="stamp.stamped && stamp.discountGenerated" class="discount-indicator">
+            <span class="green-dot"></span>
+            Desconto {{ stamp.discountGenerated | currency:'BRL' }}
+          </div>
+        </div>
+      </div>
+      <div class="card-rule">
+        <p>
+          Você escolheu o benefício não cumulativo:
+        <strong>a cada uso, ganhe 5% de desconto para a próxima compra.</strong> O 5º dia
+          completa o ciclo e não gera um novo desconto.
+        </p>
+      </div>
+      <div class="qr-code-section">
+        <!--
+          Aqui você usará um componente de uma biblioteca de QR Code, como a 'angularx-qrcode'.
+          Exemplo: <qrcode [qrdata]="qrCodeValue" [width]="256"></qrcode>
+        -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{qrCodeValue}}" alt="QR Code de Fidelidade" />
+        <p>Apresente este código no caixa</p>
+      </div>
+    </ng-container>
+
+    <div class="footer">
+      <div class="footer-item">
+        <p>Você economizou em {{ stampedDaysCount }} dias</p>
+        <span class="value discount-total">{{ user.totalDiscountAchieved | currency:'BRL' }}</span>
+      </div>
+      <div *ngIf="!isCycleComplete" class="footer-item">
+        <p>Desconto para Próxima Compra</p>
+        <span class="value discount">{{ user.availableDiscount | currency:'BRL' }}</span>
+      </div>
+    </div>
+
+    <!-- Estado de Ciclo Completo -->
+    <div *ngIf="isCycleComplete" class="cycle-complete-section">
+      <div class="completion-message">
+        <p>Parabéns!</p>
+        <span>Você completou seu cartão fidelidade.</span>
+      </div>
+      <div class="next-phase-message">
+        <p>Agora você tem direito à <strong>fase 2 de descontos</strong> com o incremento de <strong>1% de desconto</strong> no próximo cartão.</p>
+      </div>
+      <button class="new-card-button">
+        <span class="new-card-button-icon"></span>
+        Iniciar Novo Cartão
+      </button>
+    </div>
+  </div>
+</div>
