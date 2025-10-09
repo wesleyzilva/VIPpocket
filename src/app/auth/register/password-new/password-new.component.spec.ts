@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Password } from './password.component';
+import { Password } from './password-new.component';
 
 describe('Password', () => {
   let component: Password;

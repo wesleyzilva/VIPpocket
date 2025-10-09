@@ -1,39 +1,61 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'app-qr-loyalty',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './qr-loyalty.component.html',
   styleUrl: './qr-loyalty.component.scss'
 })
-export class QrLoyalty {
-  // Dados de exemplo
-  user = {
-    name: 'Cliente VIP',
-    // O desconto disponível é 5% da última compra (R$ 45,00)
-    availableDiscount: 2.25,
-    // Soma de todos os 'discountGenerated' (2.00 + 1.50 + 2.50 + 2.25)
-    totalDiscountAchieved: 8.25,
-    stamps: [
-      { day: 1, stamped: true, date: new Date('2025-10-05T12:30:00'), spentAmount: 40.0, discountGenerated: 2.0 },
-      { day: 2, stamped: true, date: new Date('2025-10-06T12:45:00'), spentAmount: 30.0, discountGenerated: 1.5 },
-      { day: 3, stamped: true, date: new Date('2025-10-07T13:00:00'), spentAmount: 50.0, discountGenerated: 2.5 },
-      { day: 4, stamped: true, date: new Date('2025-10-08T12:15:00'), spentAmount: 45.0, discountGenerated: 2.25 },
-      { day: 5, stamped: false, date: null, spentAmount: null, discountGenerated: null }
-    ]
-  };
+export class QrLoyalty implements OnInit {
+  user: any;
+  qrCodeValue = 'https://github.com/wesleyzilva/VIPpocket'; // Valor de exemplo para o QR Code
+  isCycleComplete = false;
+  stampedDaysCount = 0;
 
-  // O valor do QR Code (ex: ID do usuário, URL, etc.)
-  // Você usará uma biblioteca para gerar o QR Code a partir deste valor.
-  qrCodeValue = 'USER_ID_12345';
+  constructor() { }
 
-  get isCycleComplete(): boolean {
-    return this.user.stamps.length === 5 && this.user.stamps.every(s => s.stamped);
+  ngOnInit(): void {
+    // Dados de exemplo para teste
+    this.user = {
+      name: 'Wesley Zilva',
+      totalDiscountAchieved: 18.75,
+      availableDiscount: 3.00, // Desconto disponível após a sexta compra
+      stamps: [
+        { day: 1, stamped: true, date: new Date('2024-10-01T10:00:00'), spentAmount: 50.00, discountGenerated: 2.50 },
+        { day: 2, stamped: true, date: new Date('2024-10-02T10:00:00'), spentAmount: 75.50, discountGenerated: 3.78 },
+        { day: 3, stamped: true, date: new Date('2024-10-03T10:00:00'), spentAmount: 42.00, discountGenerated: 2.10 },
+        { day: 4, stamped: true, date: new Date('2024-10-04T10:00:00'), spentAmount: 120.00, discountGenerated: 6.00 },
+        { day: 5, stamped: true, date: new Date('2024-10-05T10:00:00'), spentAmount: 27.50, discountGenerated: 1.37 },
+        { day: 6, stamped: true, date: new Date('2024-10-06T10:00:00'), spentAmount: 60.00, discountGenerated: 3.00 },
+        { day: 7, stamped: false }
+      ]
+    };
+
+    this.updateCardState();
   }
 
-  get stampedDaysCount(): number {
-    return this.user.stamps.filter(s => s.stamped).length;
+  updateCardState(): void {
+    this.stampedDaysCount = this.user.stamps.filter((s: any) => s.stamped).length;
+    this.isCycleComplete = this.stampedDaysCount === 7;
+  }
+
+  startNewCard(): void {
+    // TODO: Idealmente, esta lógica viria de um serviço que busca um novo cartão da API.
+    // Por enquanto, vamos simular a criação de um novo cartão zerado.
+
+    // Mantém os dados do usuário, mas reseta o cartão.
+    this.user.stamps = [
+      { day: 1, stamped: false },
+      { day: 2, stamped: false },
+      { day: 3, stamped: false },
+      { day: 4, stamped: false },
+      { day: 5, stamped: false },
+      { day: 6, stamped: false },
+      { day: 7, stamped: false }
+    ];
+    this.user.availableDiscount = 0;
+    this.updateCardState(); // Atualiza a interface para mostrar o novo cartão.
   }
 }

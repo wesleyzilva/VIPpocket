@@ -40,8 +40,8 @@
 
   .stamps-container {
     display: flex;
-    justify-content: space-around;
-    gap: 0.5rem;
+    justify-content: space-between; /* Distribui o espaço igualmente */
+    gap: 0.25rem; /* Reduz o espaçamento entre os selos */
     padding: 1rem 0;
     border-top: 1px solid #444;
     border-bottom: 1px solid #444;
@@ -55,8 +55,8 @@
     }
 
     .stamp {
-      width: 60px;
-      height: 60px;
+      width: 42px; /* Reduzido para garantir que 7 selos caibam */
+      height: 42px; /* Mantém o selo circular */
       border-radius: 50%;
       border: 2px dashed #555; // Borda do selo não marcado
       display: flex;
@@ -64,7 +64,7 @@
       align-items: center;
       color: #777;
       font-weight: bold;
-      font-size: 1rem; // Reduzido o tamanho do número
+      font-size: 0.9rem; // Reduzido o tamanho do número
       transition: all 0.3s ease;
 
       &.stamped {
@@ -82,7 +82,7 @@
           line-height: 1;
 
           .stamp-date-day {
-            font-size: 1.2rem;
+            font-size: 1rem; /* Ajusta o tamanho da fonte do dia */
           }
 
           .stamp-date-month {
@@ -113,6 +113,22 @@
         border-radius: 50%;
         margin-right: 5px;
         box-shadow: 0 0 6px rgba(40, 167, 69, 0.7);
+      }
+    }
+
+    .spent-indicator {
+      display: flex;
+      align-items: center;
+      font-size: 0.7rem;
+      color: #a0a0a0;
+
+      .red-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #dc3545; // Cor vermelha para gastos
+        border-radius: 50%;
+        margin-right: 5px;
+        box-shadow: 0 0 6px rgba(220, 53, 69, 0.7);
       }
     }
 

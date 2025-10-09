@@ -1,0 +1,24 @@
+<div class="auth-container">
+  <div class="auth-form plan-selection-container">
+    <h2>Escolha seu Plano de Fidelidade</h2>
+    <p class="instructions">Etapa 1 de 4: Selecione o benefício que mais combina com você.</p>
+
+    <div class="plan-cards">
+      <div class="plan-card" (click)="selectPlan('immediate')" data-dd-action-name="Selecionou Plano Imediato">
+        <h3>Plano Imediato</h3>
+        <p>Ganhe descontos para usar na sua <strong>próxima compra</strong>. Ideal para quem volta sempre!</p>
+        <div class="plan-tag">Não Cumulativo</div>
+      </div>
+
+      <div class="plan-card" (click)="selectPlan('cumulative')" data-dd-action-name="Selecionou Plano Cumulativo">
+        <h3>Plano Cumulativo</h3>
+        <p>Acumule seus descontos e resgate um <strong>valor maior no final do ciclo</strong> de 7 dias.</p>
+        <div class="plan-tag">Recompensa Maior</div>
+      </div>
+    </div>
+
+    <div class="links">
+      <a routerLink="/login" data-dd-action-name="Navegou para Login (da Seleção de Plano)">Já tem uma conta? Faça o login</a>
+    </div>
+  </div>
+</div>

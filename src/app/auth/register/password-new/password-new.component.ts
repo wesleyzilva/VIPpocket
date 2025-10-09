@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import { RegistrationService } from '../registration.service';
+import { RegistrationService } from '../user-info/user-info.service';
 // Custom Validator to check if passwords match
 export function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password');
@@ -33,8 +33,8 @@ export function passwordMatchValidator(control: AbstractControl): ValidationErro
     MatFormFieldModule,
     MatInputModule,
   ],
-  templateUrl: './password.component.html',
-  styleUrl: './password.component.scss'
+  templateUrl: './password-new.component.html',
+  styleUrl: './password-new.component.scss'
 })
 export class Password implements OnInit {
   passwordForm;
@@ -54,21 +54,10 @@ export class Password implements OnInit {
 
   ngOnInit(): void {
     this.registrationData = this.registrationService.getRegistrationData();
-    // If we navigate directly to this page, the service data might be empty.
-    // Let's fill it with fake data for development purposes if needed.
-    if (Object.keys(this.registrationData).length === 0) {
-      console.warn('Dados da primeira etapa não encontrados. Usando dados fake para desenvolvimento.');
-      this.registrationData = { fullName: 'Usuário Teste', email: 'teste@email.com' };
-    }
   }
 
   onSubmit() {
     if (this.passwordForm.valid) {
-      const step1Data = this.registrationService.getRegistrationData();
-      const finalRegistrationData = { ...step1Data, password: this.passwordForm.value.password };
-
-      // TODO: Call API to create user with finalRegistrationData
-      console.log('Final registration data:', finalRegistrationData);
       this.isSubmitted = true;
     }
   }

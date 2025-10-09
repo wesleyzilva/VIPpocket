@@ -1,7 +1,7 @@
 <div class="auth-container">
   <form class="auth-form" [formGroup]="termsForm" (ngSubmit)="onSubmit()" novalidate>
     <h2>Termos de Uso e Privacidade</h2>
-    <p class="instructions">Etapa 2 de 3: Leia e aceite os termos para continuar.</p>
+    <p class="instructions">Etapa 3 de 4: Leia e aceite os termos para continuar.</p>
 
     <div class="terms-box">
       <h3>1. Aceitação dos Termos</h3>
@@ -23,17 +23,17 @@
       <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. Notificaremos sobre alterações significativas através do e-mail cadastrado ou por meio de avisos na aplicação.</p>
     </div>
 
-    <mat-checkbox formControlName="accept" color="primary">
+    <mat-checkbox formControlName="accept" color="primary" data-dd-action-name="Aceitou Termos de Uso">
       Li e concordo com os Termos de Uso e a Política de Privacidade.
     </mat-checkbox>
     <mat-error *ngIf="termsForm.get('accept')?.touched && termsForm.get('accept')?.hasError('required')">
       Você precisa aceitar os termos para continuar.
     </mat-error>
 
-    <button type="submit">Avançar para Senha</button>
+    <button type="submit" data-dd-action-name="Avançou para Senha (Termos)">Avançar para Senha</button>
 
     <div class="links">
-      <a routerLink="/register">Voltar para a etapa anterior</a>
+      <a routerLink="/register/user-info" data-dd-action-name="Voltou para Info Pessoal (dos Termos)">Voltar para a etapa anterior</a>
     </div>
   </form>
 </div>

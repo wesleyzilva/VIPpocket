@@ -23,12 +23,14 @@ export class TermsComponent {
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.termsForm = this.fb.group({
-      accept: [false]
+      accept: [false, Validators.requiredTrue]
     });
   }
 
   onSubmit() {
-    // Navega diretamente para a próxima etapa, ignorando a validação por enquanto.
-    this.router.navigate(['/register/password']);
+    if (this.termsForm.valid) {
+      // Navega para a próxima etapa apenas se o formulário for válido.
+      this.router.navigate(['/register/password']);
+    }
   }
 }

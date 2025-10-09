@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,20 +15,27 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
   ],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss'
+  templateUrl: './forgot-password.component.html'
 })
-export class ForgotPassword {
-  forgotPasswordForm;
+export class ForgotPasswordComponent {
+  forgotPasswordForm: FormGroup;
+  isSubmitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    if (this.forgotPasswordForm.invalid) {
+      return;
+    }
+
     // TODO: Implementar a lógica de envio de e-mail
     console.log('Solicitação de redefinição de senha para:', this.forgotPasswordForm.value);
+
+    // Altera o estado para exibir a tela de sucesso
+    this.isSubmitted = true;
   }
 }
