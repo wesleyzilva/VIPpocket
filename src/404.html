@@ -7,10 +7,11 @@
       // Obtém o segmento do caminho da URL atual.
       const redirect = sessionStorage.redirect;
 
-      // Redireciona para o index.html com as informações da rota original.
-      // Salva o caminho completo (ex: /VIPocket/login) e redireciona para a raiz do projeto.
+      // Salva o caminho completo que o usuário tentou acessar (ex: /VIPpocket/login).
       sessionStorage.redirect = location.pathname + location.search + location.hash;
-      location.href = '/VIPpocket/';
+
+      // Redireciona para a página raiz do projeto no GitHub Pages.
+      location.href = 'https://wesleyzilva.github.io/VIPpocket/';
     </script>
   </head>
   <body></body>
