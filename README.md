@@ -1,6 +1,93 @@
 <h1 align="center">VIPocket — Digital Loyalty Card</h1>
 
 <p align="center">
+  <em>Replacing paper loyalty cards with a QR-code-driven digital experience — giving small businesses measurable retention data for the first time</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-20+-DD0031?style=for-the-badge&logo=angular&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-5+-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/QR%20Code-Integrated-27AE60?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Active-27AE60?style=for-the-badge"/>
+</p>
+
+---
+
+> Progressive web application replacing paper loyalty cards with a QR-code-driven digital experience for small businesses. Tracks 7-day customer visit cycles, applies configurable discount modes automatically, and eliminates card-loss attrition — delivering measurable retention data where previously none existed.
+
+---
+
+## The Problem
+
+Small businesses run paper loyalty card programmes that fail silently: cards get lost, forgotten, or damaged; the check-in process relies on manual counting; and there is no data to measure whether the programme is retaining customers or simply subsidising behaviour that would have occurred anyway. The result is a loyalty cost with no measurable return.
+
+---
+
+## The Solution
+
+A digital-first loyalty card that lives in the customer's phone. One personal QR Code per customer, scanned at the point of service, automatically advances a 7-day visit cycle and applies the chosen discount at completion — no dedicated hardware required, no card to lose, and every visit recorded for analysis.
+
+---
+
+## Methodology
+
+```
+Customer registers (first visit)
+    └─► Receives personal QR Code (unique per customer)
+             └─► Customer visits the business
+                      └─► Business scans QR Code (any smartphone)
+                               └─► Visit logged → cycle progress updated
+                                        └─► At 7 visits: discount applied automatically
+                                                 └─► Cycle resets → customer selects discount mode for next round
+                                                          └─► All data available in VIPpocket_adm dashboard
+```
+
+**Discount modes:**
+
+| Mode | Description |
+|------|-------------|
+| Percentage | Fixed % off next purchase |
+| Free item | Pre-configured reward item |
+
+---
+
+## Results
+
+- Paper card attrition eliminated: digital card cannot be lost or damaged
+- Every visit is recorded, timestamped, and attributed to a specific customer
+- 7-day cycle creates a natural re-engagement rhythm without requiring manual follow-up
+- Companion admin dashboard (`VIPpocket_adm`) surfaces LTV, frequency, and ROI per customer
+
+---
+
+## Tradeoffs
+
+| Decision | Chosen | Alternative | Rationale |
+|----------|--------|-------------|----------|
+| App delivery | PWA (Angular) | Native iOS / Android | PWA eliminates App Store distribution friction and approval delays; the target is small businesses where installation barriers kill adoption before the first use |
+| Data persistence | Client-side (LocalStorage) | Backend database | A backend adds infrastructure cost and deployment complexity; client-side storage is appropriate for a single-store pilot and avoids cloud data privacy concerns for patient-like data |
+| QR scanning | Device camera (Web API) | Dedicated barcode scanner hardware | Device-native scanning has zero hardware cost; the tradeoff is dependency on the store owner's smartphone camera, which is acceptable given near-universal smartphone ownership |
+| Cycle length | Fixed 7 days | Configurable per store | Fixed cycles simplify UX and eliminate configuration errors on onboarding; configurable cycles are a planned v2 feature once multi-store support is added |
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Angular 20+, TypeScript, SCSS |
+| Architecture | Standalone components, OnPush, Signals |
+| QR Code | qrcode.js (client-side generation) |
+| Deployment | GitHub Pages |
+
+---
+
+## Getting Started
+
+```bash
+npm install
+ng serve          # → http://localhost:4200/
+```
   <em>Replacing paper loyalty cards with a smart, QR-code-driven mobile experience for small businesses</em>
 </p>
 
