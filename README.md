@@ -1,6 +1,123 @@
-# VIPocket
+<h1 align="center">VIPocket — Digital Loyalty Card</h1>
 
-O **VIPocket** é uma aplicação de cartão de fidelidade digital desenvolvida com Angular. O objetivo é oferecer uma solução moderna e prática para que clientes possam gerenciar seus programas de fidelidade em um único lugar, substituindo os tradicionais cartões de papel.
+<p align="center">
+  <em>Replacing paper loyalty cards with a smart, QR-code-driven mobile experience for small businesses</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-20+-DD0031?style=for-the-badge&logo=angular&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-5+-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/QR%20Code-Integrated-27AE60?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Active-27AE60?style=for-the-badge"/>
+</p>
+
+---
+
+## The Problem It Solves
+
+Small businesses lose loyal customers because paper loyalty cards get lost, forgotten, or damaged. The check-in process is slow and error-prone, and there is no data to measure whether a loyalty programme actually works.
+
+VIPocket replaces the paper card entirely with a digital-first experience: one QR Code per customer, automatic 7-day cycle tracking, and two flexible discount modes — no dedicated hardware required.
+
+---
+
+## How It Works
+
+```
+Customer registers → Receives personal QR Code → Visits the store → Store scans QR Code
+        ↓                                                                   ↓
+Discount applied automatically                            7-day cycle tracked & renewed
+```
+
+At the end of each cycle, the card resets automatically and the customer selects their preferred discount mode for the next round.
+
+---
+
+## Core Features
+
+| Feature | Description |
+|---------|-------------|
+| **Digital Loyalty Card** | Virtual card with visual 7-day cycle progress tracking |
+| **QR Code Check-in** | Unique QR code per user — fast and secure store validation |
+| **Two Discount Modes** | Immediate daily discount or end-of-cycle accumulated reward |
+| **Secure Authentication** | Email/password login with full account recovery flow |
+| **Advantage Dashboard** | Real-time view of total spent, available discount, and usage history |
+| **Step-by-step Registration** | Guided onboarding collecting only essential data |
+
+---
+
+## Discount Modes
+
+### Mode 1 — Daily Discount
+Each visit unlocks a percentage discount (e.g. 10%) valid the following day. Incentivises rapid return. Not cumulative.
+
+### Mode 2 — Accumulated Reward
+Discounts accumulate across the full 7-day cycle. The customer redeems the total at cycle end — ideal for higher-value reward goals.
+
+At the start of each new cycle, the customer freely chooses which mode applies.
+
+---
+
+## Business Value
+
+**For the customer:**
+- All loyalty programmes in one place, on mobile
+- No paper cards to carry, lose, or forget
+- Full transparency on discounts earned and available
+- Flexible reward strategy per cycle
+
+**For the business:**
+- Measurable customer return rate — see companion app [VIPpocket_adm](https://github.com/wesleyzilva/VIPpocket_adm)
+- Zero printing or card management costs
+- Strategic consumption data: frequency, average ticket, discount impact
+- Modern brand experience aligned with digital-first consumers
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Angular 20+ |
+| Language | TypeScript 5+ |
+| Styling | SCSS |
+| QR Code | qrcode.js |
+| Authentication | Email + password |
+| Build | Angular CLI |
+| Deploy | GitHub Pages / static host |
+
+---
+
+## Running Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+# → http://localhost:4200/VIPocket/
+
+# Run unit tests
+ng test
+
+# Production build
+ng build
+```
+
+---
+
+## Related Project
+
+[**VIPpocket_adm**](https://github.com/wesleyzilva/VIPpocket_adm) — the companion admin dashboard for the business owner. Answers critical questions: how often does each customer return? What is the ROI of the discount programme? What is the annual value of a retained customer?
+
+---
+
+## Author
+
+**Wesley Gomes da Silva** · IT Manager · Agile Coach · Full-Stack Developer
+
+[GitHub](https://github.com/wesleyzilva) · [LinkedIn](https://www.linkedin.com/in/wesleyzilva/) · [Portfolio](https://wesleyzilva.github.io/portfolioNearshoreWesIA/#hero) O objetivo é oferecer uma solução moderna e prática para que clientes possam gerenciar seus programas de fidelidade em um único lugar, substituindo os tradicionais cartões de papel.
 
 Através de um sistema de cartão com ciclo de 7 dias e identificação por QR Code, os usuários podem se cadastrar, acumular benefícios e resgatar descontos de forma simples e intuitiva, incentivando o consumo recorrente nos estabelecimentos parceiros.
 
