@@ -1,61 +1,82 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ClientSession } from '../../shared/client-session';
+import { LoyaltyStore } from '../../shared/loyalty.store';
+import { LoyaltyCard, Provider, QrPayload } from '../../shared/loyalty.types';
 
 @Component({
   selector: 'app-qr-loyalty',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './qr-loyalty.component.html',
-  styleUrl: './qr-loyalty.component.scss'
+  styleUrl: './qr-loyalty.component.scss',
 })
 export class QrLoyalty implements OnInit {
-  user: any;
-  qrCodeValue = 'https://github.com/wesleyzilva/VIPpocket'; // Valor de exemplo para o QR Code
-  isCycleComplete = false;
-  stampedDaysCount = 0;
+  private readonly store = inject(LoyaltyStore);
+  private readonly session = inject(ClientSession);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
-  constructor() { }
+  private readonly providerId = this.route.snapshot.queryParamMap.get('provider') ?? 'prov-demo';
+
+  card = signal<LoyaltyCard | undefined>(undefined);
+  provider = signal<Provider | undefined>(undefined);
+
+  stampedCount = computed(() => this.card()?.stamps.filter((s) => s.stamped).length ?? 0);
+  isCycleComplete = computed(() => {
+    const c = this.card();
+    return !!c && c.stamps.every((s) => s.stamped);
+  });
+  qrCodeValue = computed(() => {
+    // QR perene do CLIENTE (v2) — não muda entre ciclos ou prestadores.
+    // O prestador escaneia e o sistema descobre o cartão ativo no provider logado.
+    const customer = this.session.current();
+    if (!customer) return '';
+    const payload: QrPayload = this.store.buildCustomerQrPayload(customer.id);
+    return JSON.stringify(payload);
+  });
+  qrImageUrl = computed(() => {
+    const data = this.qrCodeValue();
+    if (!data) return '';
+    return `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(data)}`;
+  });
+  customerName = computed(() => this.session.current()?.name ?? 'VIP');
+  remainingStamps = computed(() => {
+    const c = this.card();
+    if (!c) return 0;
+    return c.ruleSize - this.stampedCount();
+  });
 
   ngOnInit(): void {
-    // Dados de exemplo para teste
-    this.user = {
-      name: 'Wesley Zilva',
-      totalDiscountAchieved: 18.75,
-      availableDiscount: 3.00, // Desconto disponível após a sexta compra
-      stamps: [
-        { day: 1, stamped: true, date: new Date('2024-10-01T10:00:00'), spentAmount: 50.00, discountGenerated: 2.50 },
-        { day: 2, stamped: true, date: new Date('2024-10-02T10:00:00'), spentAmount: 75.50, discountGenerated: 3.78 },
-        { day: 3, stamped: true, date: new Date('2024-10-03T10:00:00'), spentAmount: 42.00, discountGenerated: 2.10 },
-        { day: 4, stamped: true, date: new Date('2024-10-04T10:00:00'), spentAmount: 120.00, discountGenerated: 6.00 },
-        { day: 5, stamped: true, date: new Date('2024-10-05T10:00:00'), spentAmount: 27.50, discountGenerated: 1.37 },
-        { day: 6, stamped: true, date: new Date('2024-10-06T10:00:00'), spentAmount: 60.00, discountGenerated: 3.00 },
-        { day: 7, stamped: false }
-      ]
-    };
-
-    this.updateCardState();
+    if (!this.session.isAuthenticated()) {
+      this.router.navigate(['/onboarding'], {
+        queryParams: { provider: this.providerId },
+      });
+      return;
+    }
+    this.refresh();
+    window.addEventListener('storage', () => this.refresh());
   }
 
-  updateCardState(): void {
-    this.stampedDaysCount = this.user.stamps.filter((s: any) => s.stamped).length;
-    this.isCycleComplete = this.stampedDaysCount === 7;
+  private refresh(): void {
+    const customer = this.session.current();
+    if (!customer) return;
+    this.provider.set(this.store.getProvider(this.providerId));
+    const active = this.store.ensureCard(customer.id, this.providerId);
+    this.card.set(active);
+  }
+
+  redeemBonus(): void {
+    const c = this.card();
+    if (!c) return;
+    this.store.redeemBonus(c.id);
+    this.refresh();
   }
 
   startNewCard(): void {
-    // TODO: Idealmente, esta lógica viria de um serviço que busca um novo cartão da API.
-    // Por enquanto, vamos simular a criação de um novo cartão zerado.
-
-    // Mantém os dados do usuário, mas reseta o cartão.
-    this.user.stamps = [
-      { day: 1, stamped: false },
-      { day: 2, stamped: false },
-      { day: 3, stamped: false },
-      { day: 4, stamped: false },
-      { day: 5, stamped: false },
-      { day: 6, stamped: false },
-      { day: 7, stamped: false }
-    ];
-    this.user.availableDiscount = 0;
-    this.updateCardState(); // Atualiza a interface para mostrar o novo cartão.
+    const c = this.card();
+    if (c && !c.bonusRedeemed) this.store.redeemBonus(c.id);
+    this.refresh();
   }
 }

@@ -1,77 +1,74 @@
-<div class="loyalty-card-container">
-  <div class="loyalty-card">
-    <div class="header">
-      <p class="username">VIP: {{ user.name }}</p>
-      <h1>Cartão Fidelidade</h1>
-    </div>
-
-    <!-- Estado Normal do Cartão -->
-    <ng-container *ngIf="!isCycleComplete">
-      <div class="stamps-container">
-        <div *ngFor="let stamp of user.stamps" class="stamp-wrapper">
-          <div class="stamp" [class.stamped]="stamp.stamped">
-            <span *ngIf="!stamp.stamped" class="day-number">{{ stamp.day }}</span>
-            <div *ngIf="stamp.stamped" class="stamp-date">
-              <div class="date-info">
-                <span class="stamp-date-day">{{ stamp.date | date:'dd' }}</span>
-                <span class="stamp-date-month">{{ stamp.date | date:'MMM' }}</span>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="stamp.stamped && stamp.spentAmount" class="spent-indicator">
-            <span class="red-dot"></span>
-            Gasto {{ stamp.spentAmount | currency:'BRL' }}
-          </div>
-          <div *ngIf="stamp.stamped && stamp.discountGenerated" class="discount-indicator">
-            <span class="green-dot"></span>
-            Desconto {{ stamp.discountGenerated | currency:'BRL' }}
-          </div>
-        </div>
-      </div>
-      <div class="card-rule">
-        <p>
-          Você escolheu o benefício não cumulativo:
-        <strong>a cada uso, ganhe 5% de desconto para a próxima compra.</strong> O 7º dia
-          completa o ciclo e não gera um novo desconto.
+@if (card(); as c) {
+  <div class="loyalty-card-container">
+    <div class="loyalty-card">
+      <div class="header">
+        <p class="username">VIP: {{ customerName() }}</p>
+        <h1>Cartão Fidelidade</h1>
+        @if (provider(); as p) {
+          <p class="provider-info">
+            {{ p.name }} · {{ p.segment }} · regra: {{ p.ruleSize }} atendimentos →
+            <strong>{{ p.bonusDescription }}</strong>
+          </p>
+        }
+        <p class="cycle-info">
+          Ciclo #{{ c.cycleNumber }} · {{ stampedCount() }} / {{ c.ruleSize }}
         </p>
+        @if (!isCycleComplete() && remainingStamps() > 0) {
+          <p class="remaining-badge">
+            Faltam <strong>{{ remainingStamps() }}</strong> atendimento{{
+              remainingStamps() === 1 ? '' : 's'
+            }}
+            para o seu bônus!
+          </p>
+        }
       </div>
-      <div class="qr-code-section">
-        <!--
-          Aqui você usará um componente de uma biblioteca de QR Code, como a 'angularx-qrcode'.
-          Exemplo: <qrcode [qrdata]="qrCodeValue" [width]="256"></qrcode>
-        -->
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{qrCodeValue}}" alt="QR Code de Fidelidade" />
-        <p>Apresente este código no caixa</p>
-      </div>
-    </ng-container>
 
-    <div class="footer">
-      <div class="footer-item">
-        <p>Você economizou em {{ stampedDaysCount }} dias</p>
-        <span class="value discount-total">{{ user.totalDiscountAchieved | currency:'BRL' }}</span>
-      </div>
-      <ng-container *ngIf="!isCycleComplete; else newCardFooter">
-        <div class="footer-item">
-          <p>Desconto para Próxima Compra</p>
-          <span class="value discount">{{ user.availableDiscount | currency:'BRL' }}</span>
+      @if (!isCycleComplete()) {
+        <div class="stamps-container" [class.rule-10]="c.ruleSize === 10">
+          @for (stamp of c.stamps; track stamp.index) {
+            <div class="stamp-wrapper">
+              <div class="stamp" [class.stamped]="stamp.stamped" [title]="stamp.note || ''">
+                @if (!stamp.stamped) {
+                  <span class="day-number">{{ stamp.index }}</span>
+                } @else {
+                  <div class="stamp-date">
+                    <span class="stamp-date-day">{{ stamp.stampedAt | date: 'dd' }}</span>
+                    <span class="stamp-date-month">{{ stamp.stampedAt | date: 'MMM' }}</span>
+                  </div>
+                }
+              </div>
+              @if (stamp.stamped && stamp.note) {
+                <div class="note-indicator">{{ stamp.note }}</div>
+              }
+            </div>
+          }
         </div>
-      </ng-container>
-      <ng-template #newCardFooter>
-        <div class="footer-item">
-          <button class="new-card-button" (click)="startNewCard()" data-dd-action-name="Iniciou Novo Cartão Fidelidade">Iniciar Novo Cartão</button>
-        </div>
-      </ng-template>
-    </div>
 
-    <!-- Estado de Ciclo Completo -->
-    <div *ngIf="isCycleComplete" class="cycle-complete-section">
-      <div class="completion-message">
-        <p>Parabéns!</p>
-        <span>Você completou seu cartão fidelidade.</span>
-      </div>
-      <div class="next-phase-message">
-        <p>Agora você tem direito à <strong>fase 2 de descontos</strong> com o incremento de <strong>1% de desconto</strong> no próximo cartão.</p>
-      </div>
+        <div class="qr-code-section">
+          <img [src]="qrImageUrl()" alt="QR Code do cartão de fidelidade" />
+          <p>Apresente este código ao prestador para carimbar</p>
+          <code class="qr-debug">{{ qrCodeValue() }}</code>
+        </div>
+      } @else {
+        <div class="cycle-complete-section">
+          <div class="completion-message">
+            <p>Parabéns!</p>
+            <span>Você completou o cartão fidelidade.</span>
+          </div>
+          @if (provider(); as p) {
+            <div class="next-phase-message">
+              <p>
+                Seu bônus: <strong>{{ p.bonusDescription }}</strong>
+              </p>
+            </div>
+          }
+          <button class="new-card-button" (click)="redeemBonus()">
+            Resgatar bônus e iniciar novo cartão
+          </button>
+        </div>
+      }
     </div>
   </div>
-</div>
+} @else {
+  <p class="loading">Carregando cartão…</p>
+}

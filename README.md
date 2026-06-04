@@ -91,6 +91,25 @@ ng serve          # → http://localhost:4200/
   <em>Replacing paper loyalty cards with a smart, QR-code-driven mobile experience for small businesses</em>
 </p>
 
+> **Sinergia com VIPpocket_adm (app do prestador)**
+>
+> Este app emite o **cartão de fidelidade do cliente** com QR Code dinâmico. O prestador escaneia/colado o QR no app `VIPpocket_adm` para registrar o atendimento. Compartilham um "DB" mock via `localStorage` (chave `vippocket:db:v1`) — em produção, troque `LoyaltyStore` por um service HTTP.
+>
+> 📘 **Para ir a produção (login Google, infra, DB, hosting):** veja [PRODUCAO-E-LOGIN.md](PRODUCAO-E-LOGIN.md)
+> ```bash
+> # cliente (porta 4200)
+> cd VIPpocket && npm install && npm start
+>
+> # prestador (porta 4300)
+> cd ../VIPpocket_adm && npm install && npm start
+> ```
+>
+> Acesse `http://localhost:4200/qr-loyalty`, copie o JSON sob o QR, e cole em `http://localhost:4300/stamp` (após login).
+> Regra do cartão: **5 ou 10 atendimentos** (configurado em `provider.ruleSize`) → bônus liberado.
+
+---
+
+
 <p align="center">
   <img src="https://img.shields.io/badge/Angular-20+-DD0031?style=for-the-badge&logo=angular&logoColor=white"/>
   <img src="https://img.shields.io/badge/TypeScript-5+-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>

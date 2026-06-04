@@ -264,3 +264,45 @@
   70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
   100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
 }
+
+/* Acréscimos: regra 5/10, info do prestador, QR dinâmico */
+.provider-info {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: #c0c0c0;
+  strong { color: #d4af37; }
+}
+.cycle-info {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  color: #9acd32;
+  letter-spacing: 0.5px;
+}
+.stamps-container.rule-10 {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  .stamp-wrapper { flex: 0 0 calc(20% - 0.5rem); }
+}
+.note-indicator {
+  font-size: 0.65rem;
+  color: #d4af37;
+  max-width: 60px;
+  text-align: center;
+  word-break: break-word;
+}
+.qr-debug {
+  display: block;
+  font-size: 0.55rem;
+  color: #666;
+  word-break: break-all;
+  margin-top: 0.5rem;
+  background: #f4f4f4;
+  padding: 4px;
+  border-radius: 4px;
+}
+.loading {
+  color: #b0b0b0;
+  text-align: center;
+  margin-top: 2rem;
+}
